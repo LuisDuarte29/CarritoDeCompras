@@ -53,5 +53,13 @@
     <Compile Include="Usuario.cs" />
     <Compile Include="Venta.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.7-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.js" />
+    <Content Include="Scripts\jquery-1.7.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

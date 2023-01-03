@@ -4,5 +4,75 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Usuario</h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item active">Usuarios</li>
+</ol>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-users me-1"></i>
+    </div>
+    <div class="card-body">
+        <DIV class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success">Crear Nuevo</button>
+            </div>
+
+        </DIV>
+        <hr />
+
+        <table id="tabla" class="display cell-border" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="display-6">Nombres</th>
+                    <th class="display-6">Apellidos</th>
+                    @*<th class="display-6">Correo</th>
+                    <th class="display-6">Activo</th>*@
+
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var tablaData;
+        jQuery.ajax({
+            url:'@Url.Action("Listar", "Home")',
+            type:"GET",
+            dataType:"json",
+            contentType:"application/json;charset=utf-8",
+            success: function (data) {
+                debugger; //sirve para poner un punto de interrupcion
+                console.log(data);
+            }
+
+
+
+
+
+        })
+
+        tablaData = $("tabla").DataTable({
+            responsive: true,
+            "ajax": {
+            url:'@Url.Action("Listar", "Home")',
+            type:"GET",
+            dataType:"json"
+            },
+            "columns":[
+                { "data": "Nombres" },
+                { "data": "Apellidos" }
+                //{ "data": "Correo" },
+                //{ "data": "Clave" }
+
+
+            ]
+        })
+    </script>
+
+
+}
 

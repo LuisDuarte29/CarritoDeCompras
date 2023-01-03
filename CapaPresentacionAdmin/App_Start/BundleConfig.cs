@@ -18,12 +18,13 @@ namespace CapaPresentacionAdmin
             //// ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
             //            "~/Scripts/modernizr-*"));
-            bundles.Add(new Bundle("~/bundles/complementos").Include("~/Scripts/fontawesome/all.min.js","~/Scripts/scripts.js"));
+            bundles.Add(new Bundle("~/bundles/complementos").Include(
+                "~/Scripts/fontawesome/all.min.js","~/Scripts/scripts.js", "~/Scripts/DataTables/jquery.dataTables.js", "~/Scripts/DataTables/dataTables.responsive.js"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/DataTables/css/jquery.dataTables.css", "~/Content/DataTables/css/dataTables.responsive.css"));
         }
     }
 }
