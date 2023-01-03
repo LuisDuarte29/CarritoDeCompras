@@ -23,11 +23,11 @@
 
         <table id="tabla" class="display cell-border" style="width:100%">
             <thead>
-                <tr>
+                <tr class="w-25">
                     <th class="display-6">Nombres</th>
                     <th class="display-6">Apellidos</th>
-                    @*<th class="display-6">Correo</th>
-                    <th class="display-6">Activo</th>*@
+                    <th class="display-6">Correo</th>
+                    <th class="display-6">Activo</th>
 
                 </tr>
             </thead>
@@ -55,7 +55,7 @@
 
         })
 
-        tablaData = $("tabla").DataTable({
+        tablaData = $("#tabla").DataTable({
             responsive: true,
             "ajax": {
             url:'@Url.Action("Listar", "Home")',
@@ -64,9 +64,9 @@
             },
             "columns":[
                 { "data": "Nombres" },
-                { "data": "Apellidos" }
-                //{ "data": "Correo" },
-                //{ "data": "Clave" }
+                { "data": "Apellidos" },
+                { "data": "Correo" },
+                { "data": "Clave" }
 
 
             ]
