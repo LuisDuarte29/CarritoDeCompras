@@ -25,7 +25,7 @@ namespace CapaPresentacionAdmin.Controllers
 
             listaUsuarios = new CN_Usuario().Listar();
             return Json(new { data=listaUsuarios }, JsonRequestBehavior.AllowGet);
-            Console.WriteLine("");
+            Console.WriteLine("Este es la rama lucia");
         }
     }
 }
