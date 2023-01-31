@@ -22,7 +22,7 @@
         </DIV>
         <hr />
 
-        <table id="tabla" class="">
+        <table id="tabla" class="display cell-border" style="width:100%">
             <thead>
                 <tr class="">
                     <th>Nombres</th>
@@ -90,6 +90,7 @@
    
         tablaData = $('#tabla').DataTable({
             "responsive": true,
+           /* "ordering": false,*/
             "ajax": {
                 url: '@Url.Action("Listar", "Home")',
                 type: "GET",
@@ -99,6 +100,7 @@
                 { "data": "Nombres" },
                 { "data": "Apellidos" },
                 { "data": "Correo" },
+
                 {
                     "data": "Activo", "render": function (valor) {
 
@@ -116,8 +118,8 @@
                 {
                     "data": null,
                     "defaultContent": '<button type="button" class="btn btn-success btn-editado"><i class="fas fa-pen"></i></button>',
-                      "searching": false,
-                    "ordering": false
+                      "searching": false
+                  
                  
                     
                 }
@@ -130,7 +132,10 @@
         });
 
         function abrirModal(json) {
-
+            $("#txtNombre").val("")
+            $("#txtApellido").val("")
+            $("#txtCorreo").val("")
+            $("#cboActivo").val(1)
             if (json != null) {
                 $("#txtNombre").val(json.Nombres)
                 $("#txtApellido").val(json.Apellidos)
