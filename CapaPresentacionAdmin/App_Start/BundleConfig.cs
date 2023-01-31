@@ -24,7 +24,7 @@ namespace CapaPresentacionAdmin
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/DataTables/css/jquery.dataTables.css", "~/Content/DataTables/css/dataTables.responsive.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/DataTables/css/jquery.dataTables.css", "~/Content/DataTables/css/dataTables.responsive.css", "~/Content/bootstrap.css", "~/Content/fontawesome.css"));
         }
     }
 }

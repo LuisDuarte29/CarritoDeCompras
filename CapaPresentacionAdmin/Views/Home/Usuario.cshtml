@@ -15,19 +15,21 @@
     <div class="card-body">
         <DIV class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success">Crear Nuevo</button>
+                <button type="button" id="btnCrearNuevo" class="btn btn-success" onclick="abrirModal(null)">Crear Nuevo</button>
+           
             </div>
 
         </DIV>
         <hr />
 
-        <table id="tabla" class="display cell-border" style="width:100%">
+        <table id="tabla" class="">
             <thead>
-                <tr class="w-25">
-                    <th class="display-6">Nombres</th>
-                    <th class="display-6">Apellidos</th>
-                    <th class="display-6">Correo</th>
-                    <th class="display-6">Activo</th>
+                <tr class="">
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Activo</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -36,41 +38,119 @@
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="divModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" id="staticBackdropLabel">Usuarios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="floatingInput">Nombre</label>
+                        <input type="text" id="txtNombre" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="floatingInput">Apellido</label>
+                        <input type="text" id="txtApellido" class="form-control" placeholder="Apellido" aria-label="Apellidos" aria-describedby="basic-addon1">
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="floatingInput">Correo</label>
+                        <input type="text" id="txtCorreo" class="form-control" placeholder="Correo" aria-label="Correo">
+                   
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="floatingInput">Activo</label>
+                        <select id="cboActivo" class="form-select" aria-label="Default select example">
+
+                            <option value="1">Si</option>
+                            <option value="2">No</option>
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         var tablaData;
-        jQuery.ajax({
-            url:'@Url.Action("Listar", "Home")',
-            type:"GET",
-            dataType:"json",
-            contentType:"application/json;charset=utf-8",
-            success: function (data) {
-                debugger; //sirve para poner un punto de interrupcion
-                console.log(data);
-            }
-
-
-
-
-
-        })
-
-        tablaData = $("#tabla").DataTable({
-            responsive: true,
+   
+        tablaData = $('#tabla').DataTable({
+            "responsive": true,
             "ajax": {
-            url:'@Url.Action("Listar", "Home")',
-            type:"GET",
-            dataType:"json"
+                url: '@Url.Action("Listar", "Home")',
+                type: "GET",
+                dataType: "json"
             },
-            "columns":[
+            "columns": [
                 { "data": "Nombres" },
                 { "data": "Apellidos" },
                 { "data": "Correo" },
-                { "data": "Clave" }
+                {
+                    "data": "Activo", "render": function (valor) {
 
 
-            ]
+                        if (valor) {
+                            return "SI"
+                        }
+                        else {
+                            return "NO"
+                        }
+                    }
+
+
+                },
+                {
+                    "data": null,
+                    "defaultContent": '<button type="button" class="btn btn-success btn-editado"><i class="fas fa-pen"></i></button>',
+                      "searching": false,
+                    "ordering": false
+                 
+                    
+                }
+
+
+            ],
+            "language": {
+                "url":"https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"
+            }
+        });
+
+        function abrirModal(json) {
+
+            if (json != null) {
+                $("#txtNombre").val(json.Nombres)
+                $("#txtApellido").val(json.Apellidos)
+                $("#txtCorreo").val(json.Correo)
+                $("#cboActivo").val(json.Activo == true ? 1 :0)
+            }
+            $("#divModal").modal("show");
+        
+        }
+
+        $("#tabla tbody").on("click", '.btn-editado', function () {
+            var filaSeleccionada = $(this).closest("tr");
+            var data = tablaData.row(filaSeleccionada).data();
+            abrirModal(data);
+
+
+
+
         })
+    
     </script>
 
 

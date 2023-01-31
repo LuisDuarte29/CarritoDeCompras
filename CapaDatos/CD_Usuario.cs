@@ -19,7 +19,7 @@ namespace CapaDatos
             {
                 using (SqlConnection conexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "SELECT IdUsuario,Nombres,Apellidos,Correo,Clave FROM USUARIO";
+                    string query = "SELECT IdUsuario,Nombres,Apellidos,Correo,Clave,Activo FROM USUARIO";
                     SqlCommand cmd = new SqlCommand(query, conexion);
                     cmd.CommandType = CommandType.Text;
                     conexion.Open();
@@ -34,12 +34,14 @@ namespace CapaDatos
                                     Nombres = dr["Nombres"].ToString(),
                                     Apellidos = dr["Apellidos"].ToString(),
                                     Correo = dr["Correo"].ToString(),
-                                    Clave = dr["Clave"].ToString()
+                                    Clave = dr["Clave"].ToString(),
+                                    Activo = Convert.ToBoolean(dr["Activo"])
+
 
                                 }
 
 
-                                );
+                                ) ;
                         }
 
                     }
