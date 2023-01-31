@@ -49,6 +49,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <input id="txtID" style="visibility:hidden" value="0" />
                     <div class="col-sm-6">
                         <label for="floatingInput">Nombre</label>
                         <input type="text" id="txtNombre" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
@@ -132,11 +133,13 @@
         });
 
         function abrirModal(json) {
+            $("#txtID").val(0)
             $("#txtNombre").val("")
             $("#txtApellido").val("")
             $("#txtCorreo").val("")
             $("#cboActivo").val(1)
             if (json != null) {
+                $("#txtID").val(json.ID)
                 $("#txtNombre").val(json.Nombres)
                 $("#txtApellido").val(json.Apellidos)
                 $("#txtCorreo").val(json.Correo)
