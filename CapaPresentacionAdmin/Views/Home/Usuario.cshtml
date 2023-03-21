@@ -49,7 +49,8 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input id="txtID" style="visibility:hidden" value="0" />
+                    <input type="text" class="form-control" id="txtID" />
+                   
                     <div class="col-sm-6">
                         <label for="floatingInput">Nombre</label>
                         <input type="text" id="txtNombre" class="form-control" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
@@ -63,7 +64,7 @@
                     <div class="col-sm-6">
                         <label for="floatingInput">Correo</label>
                         <input type="text" id="txtCorreo" class="form-control" placeholder="Correo" aria-label="Correo">
-                   
+
 
                     </div>
                     <div class="col-sm-6">
@@ -80,7 +81,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" id="btnGuardar" onclick="Guardar()" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>
@@ -139,26 +140,62 @@
             $("#txtCorreo").val("")
             $("#cboActivo").val(1)
             if (json != null) {
-                $("#txtID").val(json.ID)
+                $("#txtID").val(json.IdUsuario)
                 $("#txtNombre").val(json.Nombres)
                 $("#txtApellido").val(json.Apellidos)
                 $("#txtCorreo").val(json.Correo)
-                $("#cboActivo").val(json.Activo == true ? 1 :0)
+                $("#cboActivo").val(json.Activo == true ? 1 : 0)
+               
             }
             $("#divModal").modal("show");
         
         }
-
+        var filaSeleccionada
         $("#tabla tbody").on("click", '.btn-editado', function () {
-            var filaSeleccionada = $(this).closest("tr");
+            filaSeleccionada = $(this).closest("tr");
             var data = tablaData.row(filaSeleccionada).data();
             abrirModal(data);
+            console.log(data)
 
 
 
 
         })
-    
+        function Guardar() {
+            var Usuario = {
+
+                IdUsuario: $("#txtID").val(),
+                Activo: $("#cboActivo").val() == true ? 1 : 0,
+                Apellidos: $("#txtApellido").val(),
+                Correo: $("#txtCorreo").val(),
+                Nombres: $("#txtNombre").val()
+
+
+            }
+            debugger;
+            jQuery.ajax({
+                url: '@Url.Action("GuardarUsuario","Home")',
+                type: "Post",
+                dataType: "json",
+                data: JSON.stringify({ objeto: Usuario }),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (Usuario.IdUsuario == 0) {
+                        if (data.resultado != 0) {
+                            Usuario.IdUsuario = data.resultado;
+                            tablaData.row.add(Usuario).draw(false);
+                            $("#divModal").modal("hide");
+                        }
+                    } else {
+                        tablaData.row(filaSeleccionada).data(Usuario).draw(false);
+                    }
+                }, error: function(){
+
+            }
+            })
+       
+            
+        }
     </script>
 
 

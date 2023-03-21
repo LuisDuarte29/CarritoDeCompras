@@ -28,5 +28,19 @@ namespace CapaPresentacionAdmin.Controllers
             Console.WriteLine("este es la rama master");
             Console.WriteLine("Este es la rama lucia");
         }
+        [HttpPost]
+        public JsonResult GuardarUsuario(Usuario usuarios)
+        {
+            object resultado;
+            string mensaje = "";
+            if (usuarios.IdUsuario == 0)
+            {
+                resultado = new CN_Usuario().Registrar(usuarios, out mensaje);
+            }else
+            {
+                resultado = new CN_Usuario().Editar(usuarios, out mensaje);
+            }
+            return Json(new { resultado=resultado,mensaje=mensaje },JsonRequestBehavior.AllowGet) ;
+        }
     }
 }
